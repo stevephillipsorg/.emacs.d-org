@@ -1,0 +1,5 @@
+* README for .emacs.d
+
+This git repo contains the configuration files I use for Emacs. Its meant to provide the same emacs experience across platforms, which for me is Linux and Mac. 
+
+Please view the [[https://github.com/stevephillipsorg/.emacs.d/blob/main/init.org][init.org]] file for all the gory details
