@@ -3,6 +3,7 @@ f#+TITLE: Emacs Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
 * Introduction
+
 I've been using Emacs since 1989, when I started working at Convex Computer and was given the choice between VI and Emacs. Coming from ETA Systems where we used Apollo Workstations, I had little experience with UNIX. The Apollos used Aegis OS, which was more like Multics, and UNIX seemed a bit primitive in comparison. The Convex machines were Sun workstations, so BSD UNIX was now my home. 
 
 As it happened, my office-mate was an Emacs user so thats what I started using. All of my Endot HDL code was done in Emacs. I still have my yellow Gnu Emacs Manual, Sixth Edition, Emacs Version 18 for Unix Users, March 1987. It came straight from the free Software Foundation and looks like a typical copy shop book of the period, with the plastic ring binder on the edge.
@@ -20,16 +21,19 @@ This is an Emacs configuration file written in [[http://orgmode.org][Org mode]].
 If you really do want to try this config out, this is how I'd go about it:
 
 First, go to your home directory
+
 #+BEGIN_SRC sh :tangle no
 cd $HOME
 #+END_SRC
 
 Backup your old =~/.emacs.d= (if necessary).
+
 #+BEGIN_SRC sh :tangle no
 mv ~/.emacs.d ~/.emacs.d-bak
 #+END_SRC
 
 Clone this repo
+
 #+BEGIN_SRC sh :tangle no
 git clone https://github.com/stevephillipsorg/.emacs.d.git
 #+END_SRC
@@ -37,8 +41,11 @@ git clone https://github.com/stevephillipsorg/.emacs.d.git
 On first run it should install a bunch of packages (this might take a while), and you might have to restart your Emacs the first time. If you experience bugs, please let me know!
 
 * Meta 
+
 ** init.org vs init.el vs init.elc
+
 *** Methodology
+
 All changes to the configuration should be done in =init.org=, *not* in =init.el=. Any changes in the =init.el= will be overwritten when saving =init.org=. The =init.el= in this repo should not be tracked by git, and is replaced the first time Emacs is started (assuming it has been renamed to =~/.emacs.d=).
 
 The basic idea is that the repo from Github contains a simple =init.el= that is loaded the first time Emacs is run after cloning the repo. This simple =init.el= is sufficient to load this =init.org= file and create a proper =init.el= from it, using =org-babel=. The simple init.el is overwritten and all subsequent Emacs sessions will use the real =init.el= generated from this =init.org= file.
@@ -81,6 +88,7 @@ git update-index --no-assume-unchanged init.el
 #+END_SRC
 
 ** Theory vs Practice
+
 *** Useful commands
 
    Some commands that I find useful but also have a hard time remembering:
@@ -99,6 +107,7 @@ git update-index --no-assume-unchanged init.el
 | C-x r SPC | Save point to register     |
 | C-x r j   | Jump to register           |
 |-----------+----------------------------|
+
 *** Package List
 
    The various packages I use are listed here:
@@ -125,17 +134,14 @@ git update-index --no-assume-unchanged init.el
 
 *** Packages to try someday
 
-|----------------------+----------------------------------------------|
-| Package Name         | Description                                  |
-|----------------------+----------------------------------------------|
-| magit                | Everyone loves it                            |
-| simpleclip           | https://github.com/rolandwalker/simpleclip   |
-| writer-word-goals    | https://tinyurl.com/ygy5dylj                 |
-| csv-mode             | https://elpa.gnu.org/packages/csv-mode.html  |
-| treemacs             | https://github.com/Alexander-Miller/treemacs |
-| treemacs-icons-dired | https://tinyurl.com/yggkonpg                 |
-|                      |                                              |
-|----------------------+----------------------------------------------|
+|-------------------+-------------------|
+| Package Name      | Description       |
+|-------------------+-------------------|
+| magit             | Everyone loves it |
+| simpleclip        | [[https://github.com/rolandwalker/simpleclip][GitHub]]            |
+| writer-word-goals | [[https://tinyurl.com/ygy5dylj][GitHub Blog]]       |
+| csv-mode          | [[https://elpa.gnu.org/packages/csv-mode.html][ELPA]]              |
+|-------------------+-------------------|
 
 *** Key Mapping
 
@@ -152,9 +158,8 @@ Emacs supports the Modifier keys Control, Meta, Super and Hyper. These can be ma
 
 Note that I usually map the CapsLock key to be a Control key for the entire OS, So that has to be done via System preferences
 
- 
-
 * Configurations
+
 ** Header
 
 Start the init.el with a warning about editing it directly, so that if someone does open that file they have been given fair warning. We set lexical-binding her for some reason I don't remember...
@@ -290,7 +295,6 @@ These are settings that I have had forever. Some I'm not sure if I really need w
 (setq diff-switches "-u")             ;; default to unified diffs
 (setq require-final-newline 'query)   ;; always end a file with a newline
 (fset 'yes-or-no-p 'y-or-n-p)         ;; brevity
-
 
 ;; Try some mouse wheel settings
 ;;;org;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
@@ -507,6 +511,7 @@ Some other themes I like. Load them here and then select them with <F5>
 #+END_SRC
 
 **** Counsel
+
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :after ivy
@@ -539,6 +544,7 @@ Some other themes I like. Load them here and then select them with <F5>
 #+END_SRC
 
 *** Auto-Complete
+
 This adds a help utility to complete variable names as you type them, which is nice, except that it throws my typing off because it grabs control of curser movement. More trouble than its worh, so it isn't current used (tangled).
 
 #+BEGIN_SRC emacs-lisp :tangled no
@@ -580,6 +586,7 @@ This adds a help utility to complete variable names as you type them, which is n
 *** Treemacs
 
     The following use-package snippet includes a list of all of treemacs’ configuration variables in their default setting. Setting them all yourself is not necessary, they are only listed here to encourage discoverability.
+
 #+BEGIN_SRC emacs-lisp 
   (use-package treemacs
     :ensure t
@@ -658,7 +665,9 @@ This adds a help utility to complete variable names as you type them, which is n
     :ensure t
     :config (treemacs-icons-dired-mode))
 #+END_SRC
-The following optional treemacs relted packages are available but I'm not using them
+
+The following optional treemacs related packages are available but I'm not using them
+
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package treemacs-projectile
     :after (treemacs projectile)
@@ -677,6 +686,7 @@ The following optional treemacs relted packages are available but I'm not using 
 *** Neotree
 
     Depricating this in favor of Treemacs, so tangling is turned off for this. 
+
 #+BEGIN_SRC emacs-lisp :tangle no
 ;; Neotree - https://goo.gl/N05Cdj
 ;; Directory browser like in Finder
@@ -706,6 +716,7 @@ The following optional treemacs relted packages are available but I'm not using 
 #+END_SRC
 
 *** Arduino-mode
+
 #+BEGIN_SRC emacs-lisp
 ;; arduino-mode -
 (use-package arduino-mode
@@ -869,7 +880,6 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 There is a lot more Org config from EFS example, mostly for TODOs, Agenda and Capture that I left out here. Perhaps I'll go back and add some of that in when I get better at Org files.
 
-
 *** Nicer Heading Bullets
 
 [[https://github.com/sabof/org-bullets][org-bullets]] replaces the heading stars in =org-mode= buffers with nicer looking characters that you can control.  Another option for this is [[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]].
@@ -939,68 +949,8 @@ This snippet adds a hook to =org-mode= buffers so that =sjp/org-babel-tangle-con
 
 There is a similar version of this defined in the Auto-Tangling section, so we won't tangle this one
 
-
 #+begin_src emacs-lisp :tangle no
 
-  ;; Automatically tangle our Emacs.org config file when we save it
-  (defun sjp/org-babel-tangle-config ()
-    (when (string-equal (file-name-directory (buffer-file-name))
-                        (expand-file-name user-emacs-directory))
-      ;; Dynamic scoping to the rescue
-      (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
-
-  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'sjp/org-babel-tangle-config)))
-
-#+end_src
-
-
-==============================================================================
-*** Org-Mode (my original stuff)
-
-org-bullets enables the use of nice graphical bullets for lists
-
-#+BEGIN_SRC emacs-lisp :tangle no
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-
-;; The following lines are always needed. Choose your own keys.
-;;(global-set-key "\C-cl" 'org-store-link)
-;;(global-set-key "\C-ca" 'org-agenda)
-;;(global-set-key "\C-cc" 'org-capture)
-;;(global-set-key "\C-cb" 'org-iswitchb)
-
-#+END_SRC
-
-*** Org-Babel Stuff
-
-The following _stolen[fn:emacsfromscratch]_ snippets configure org-babel so that when ever this file is saved it will be tangled.
-
-**** Configure Babel Languages
-
-To execute or export code in =org-mode= code blocks, you'll need to set up =org-babel-load-languages= for each language you'd like to use. [[https://orgmode.org/worg/org-contrib/babel/languages.html][This page]] documents all of the languages that you can use with =org-babel=.
-
-#+begin_src emacs-lisp :tangle no
-
-  (with-eval-after-load 'org
-    (org-babel-do-load-languages
-        'org-babel-load-languages
-        '((emacs-lisp . t)
-        (python . t)))
-
-    (push '("conf-unix" . conf-unix) org-src-lang-modes))
-
-#+end_src
-
-**** Auto-tangle Configuration Files
-
-This snippet adds a hook to =org-mode= buffers so that =sjp/org-babel-tangle-config= gets executed each time such a buffer gets saved.  This function checks to see if the file being saved is the Emacs.org file you're looking at right now, and if so, automatically exports the configuration here to the associated output files.
-
-There is a similar version of this defined in the Auto-Tangling section, so we won't tangle this one
-
-#+begin_src emacs-lisp :tangle no
   ;; Automatically tangle our Emacs.org config file when we save it
   (defun sjp/org-babel-tangle-config ()
     (when (string-equal (file-name-directory (buffer-file-name))
@@ -1048,11 +998,3 @@ This is the guy that did the Modus themes
 [fn:alhassy] https://github.com/alhassy/emacs.d
 Very well described config
 
-* One
-** two
-*** three
-**** four
-***** five
-****** six
-******* seven
-******** eight
