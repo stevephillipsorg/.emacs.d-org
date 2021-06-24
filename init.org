@@ -240,6 +240,8 @@ There are a few things I like to do after the init has finished, like load the c
 
 ** Useful Functions
 
+*** Toggle between two points
+
 These two function allow me to quickly switch between two points in a buffer. It uses the "register" functions but in a way that I can bind them to keys to use quickly. I personally set "C-." to sjp/point-to-register and "S-." to sjp/jump-to-register. Hit "C-." to set your initial point, then you can go else where in the buffer and use "S-." to toggle back and forth between the current position and the point you saved.
 
 #+BEGIN_SRC emacs-lisp
@@ -261,6 +263,8 @@ that was stored with sjp/point-to-register."
 (global-set-key (kbd "s-.") 'sjp/jump-to-register)
 #+END_SRC
 
+*** Switching Themes Cleanly
+
 I like to switch between themes depending on time of day and my mood. By default Emacs loads themes on top of each other which can lead to odd conflicts. By using =counsel-load-theme=, I get the Ivy selection method.
 
 #+begin_src emacs-lisp
@@ -270,6 +274,24 @@ I like to switch between themes depending on time of day and my mood. By default
       (disable-theme (car custom-enabled-themes)))
     (counsel-load-theme))
   (global-set-key (kbd "<f5>") 'sjp/switch-theme)
+#+end_src
+
+*** Cleaning up Theme list
+
+A work in progress, this function will eventually be how I block some themes from showing up when the list of avaiable themes is shown. Some theme packages install a bunch of variations on a theme, most of which are not of interest. This function will allow me to just show the ones I like.
+
+#+begin_src emacs-lisp :tangle no
+  (defvar sjp/blacklisted-themes '("anti-zenburn",  "sanityinc-solarized-dark",
+                                   "leuven-dark",  "material", "poet-dark-monochrome",
+                                   "poet-dark",  "deeper-blue",  "light-blue",
+                                   "manoj-dark",  "misterioso", "tsdh-dark",
+                                   "tsdh-light",  "wheatgrass"))
+  ;; "whiteboard" "wombat"
+
+  (defun sjp/theme-allowed (orig-fun theme-name)" 
+    (and (funcall orig-fun theme-name)
+         (not (member (symbol-name theme-name) sjp/blacklisted-themes))))
+  (advice-add 'custom-theme-name-valid-p :around #'sjp/theme-allowed)
 #+end_src
 
 ** Random Simple Settings
@@ -487,13 +509,20 @@ Now that we have =package= and =use-package= set up, we can start loading and co
 Some other themes I like. Load them here and then select them with <F5>
 
 #+begin_src emacs-lisp
-  (use-package anti-zenburn-theme)
-  (use-package doneburn-theme)
-  (use-package hc-zenburn-theme)
-  (use-package labburn-theme)
-  (use-package zenburn-theme)
-  (use-package material-theme)
-#+end_src
+;;  (use-package anti-zenburn-theme) ;; blues/purple on medium grey
+  (use-package doneburn-theme)     ;; muted colors on white
+  (use-package hc-zenburn-theme)   ;; muted tans/green on dark grey
+  (use-package labburn-theme)      ;; muted tans/green on dark grey
+  (use-package zenburn-theme)      ;; tans/green on dark grey
+;;  (use-package material-theme)     ;; too many flavors
+;;  (use-package alect-theme)        ;; Not found?
+;;  (use-package colorless-theme)    ;; Not found?
+  (use-package leuven-theme)
+  (use-package color-theme-sanityinc-solarized)
+  (use-package organic-green-theme)
+;;  (use-package base16-theme) ;; too many flavors
+  (use-package poet-theme)
+  #+end_src
 
 *** Ivy
 
@@ -577,7 +606,7 @@ This adds a help utility to complete variable names as you type them, which is n
 
     Interface to Git - https://magit.vc/
 
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC emacs-lisp
 (use-package magit
   :ensure t
   :bind ("C-x g" . magit-status)
