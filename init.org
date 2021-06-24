@@ -137,10 +137,11 @@ git update-index --no-assume-unchanged init.el
 |-------------------+-------------------|
 | Package Name      | Description       |
 |-------------------+-------------------|
-| magit             | Everyone loves it |
 | simpleclip        | [[https://github.com/rolandwalker/simpleclip][GitHub]]            |
-| writer-word-goals | [[https://tinyurl.com/ygy5dylj][GitHub Blog]]       |
+| writer-word-goals | [[https://tinyurl.com/ygy5dylj][GitHub]]            |
 | csv-mode          | [[https://elpa.gnu.org/packages/csv-mode.html][ELPA]]              |
+| kubernetes-el     | [[https://github.com/chrisbarrett/kubernetes-el][GitHub]]            |
+| ecloud            | [[https://github.com/techniumlabs/ecloud][GitHub]]            |
 |-------------------+-------------------|
 
 *** Key Mapping
