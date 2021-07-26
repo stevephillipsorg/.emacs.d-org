@@ -330,7 +330,7 @@ These are settings that I have had forever. Some I'm not sure if I really need w
 ;;;org;(global-set-key (kbd "C-M-r") 'isearch-backward)
 
 ;;;org;(show-paren-mode 1)                   ;; Highlight matching paren
-;;;org;(setq-default indent-tabs-mode nil)   ;; 
+(setq-default indent-tabs-mode nil)   ;; 
 ;;;org;;;(setq x-select-enable-clipboard t)    ;; Under X, use X clipboard
 ;;;org;;;(setq x-select-enable-primary t)      ;; Under X, use X clipboard
 ;;;org;(setq save-interprogram-paste-before-kill t) 
@@ -345,10 +345,10 @@ These are settings that I have had forever. Some I'm not sure if I really need w
 (setq backup-directory-alist `(("." . ,(concat user-emacs-directory
 					       "backups"))))
 ;; Set some mode hooks
-(setq c-mode-common-hook ;; will be used by all modes derived from c-mode
-      '(lambda ()
-         (ggtags-mode 1)
-         ))
+;;(setq c-mode-common-hook ;; will be used by all modes derived from c-mode
+;;      '(lambda ()
+;;         (ggtags-mode 1)
+;;         ))
 #+END_SRC
 
 ** Desktop Sessions
@@ -575,9 +575,9 @@ Some other themes I like. Load them here and then select them with <F5>
 
 *** Auto-Complete
 
-This adds a help utility to complete variable names as you type them, which is nice, except that it throws my typing off because it grabs control of curser movement. More trouble than its worh, so it isn't current used (tangled).
+This adds a help utility to complete variable names as you type them, which is nice, except that it throws my typing off because it grabs control of curser movement. More trouble than its worh, so it isn't current used (tangled). 
 
-#+BEGIN_SRC emacs-lisp :tangled no
+#+BEGIN_SRC emacs-lisp :tangle no
 (use-package auto-complete
   :ensure t
   :init
