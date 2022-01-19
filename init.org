@@ -550,6 +550,31 @@ Some other themes I like. Load them here and then select them with <F5>
 )
 #+END_SRC
 
+This function allows the use of counsel-linux-app function from your window manager or linux command line. To do this, create a script that contains the following command, which will open the emacs frame as suggested in the function below. 
+
+#+BEGIN_SRC emacs-lisp :tangle no
+emacsclient -e "(emacs-run-launcher)"
+#+END_SRC
+
+This was taken from Reddit (http://t.ly/BTIb) [[http:://t.ly/BTlb][Reddit]]
+ 
+#+BEGIN_SRC emacs-lisp
+  (defun emacs-run-launcher ()
+  "Create and select a frame called emacs-run-launcher which
+  consists only of a minibuffer and has specific dimensions. Run
+  counsel-linux-app on that frame, which is an emacs command that
+  prompts you to select an app and open it in a dmenu like
+  behaviour. Delete the frame after that command has exited"
+  (interactive)
+  (with-selected-frame (make-frame '((name . "emacs-run-launcher")
+  (minibuffer . only)
+  (width . 120)
+  (height . 11)))
+  (counsel-linux-app)
+  (delete-frame)))
+  )
+#+END_SRC
+
 **** Ivy-Rich
 
 #+BEGIN_SRC emacs-lisp
@@ -820,6 +845,7 @@ This is how I always used to load verilog mode, before converting to use-package
              (setq ggtags-mode t) ;; always run ggtags-mode in verilog mode
              ))
 #+END_SRC
+
 
 
 * Org Mode
